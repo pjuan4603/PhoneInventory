@@ -6,11 +6,13 @@ import NYCREATES.phoneStore.service.phoneService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -112,21 +114,25 @@ public class phoneServiceImpl implements phoneService {
 
         // Start building the criteria
         Criteria criteria = new Criteria();
+        List<Sort.Order> sortingOrder = new ArrayList<>();
 
         // Add criteria for each provided parameter
         if (brand != null) {
             Pattern regexPattern = Pattern.compile(".*" + brand + ".*", Pattern.CASE_INSENSITIVE);
             criteria.and("brand").regex(regexPattern);
+            sortingOrder.add(Sort.Order.asc("brand"));
         }
 
         if (model != null) {
             Pattern regexPattern = Pattern.compile(".*" + model + ".*", Pattern.CASE_INSENSITIVE);
             criteria.and("model").regex(regexPattern);
+            sortingOrder.add(Sort.Order.asc("model"));
         }
 
         if (color != null) {
             Pattern regexPattern = Pattern.compile(".*" + color + ".*", Pattern.CASE_INSENSITIVE);
             criteria.and("color").regex(regexPattern);
+            sortingOrder.add(Sort.Order.asc("color"));
         }
 
         if (storageComp != null) {
@@ -141,6 +147,8 @@ public class phoneServiceImpl implements phoneService {
             } else {
                 criteria.and("storage").is(storage);
             }
+
+            sortingOrder.add(Sort.Order.asc("storage"));
         }
 
         if (priceComp != null) {
@@ -155,10 +163,21 @@ public class phoneServiceImpl implements phoneService {
             } else {
                 criteria.and("price").is(price);
             }
+
+            sortingOrder.add(Sort.Order.asc("price"));
+        }
+
+        // If brand was not part of the search param we can still sort on brand as the last sorting priority
+        if (brand == null) {
+            sortingOrder.add(Sort.Order.asc("brand"));
         }
 
         Query query = new Query(criteria);
         LOG.debug("Query: " + query);
+
+        Sort sort = Sort.by(sortingOrder);
+        query.with(sort);
+
         return mongoTemplate.find(query, Phone.class);
     }
 
@@ -168,5 +187,4 @@ public class phoneServiceImpl implements phoneService {
 
         return phoneRepository.save(phone);
     }
-
 }
