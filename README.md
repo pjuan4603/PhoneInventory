@@ -1,4 +1,5 @@
 ## Steps to follow to deploy backend server ##
+run under SpringBoot-RESTAPI-backend
 
 ### `mvn clean install`
 
@@ -9,6 +10,7 @@ This command will clean any existing build artifacts and then compile, test, and
 Launches the backend server. This will start the Spring Boot application.
 
 ## Steps to follow to deploy frontend server ##
+run under React-frontend
 
 ### `npm install`
 
