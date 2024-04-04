@@ -11,7 +11,7 @@ export default function PhoneSearch() {
 
     return (
         <div>
-            <h1>Phone Search</h1>
+            <h1>Phone Inventory</h1>
             <FilterCriteria onSearch={handleSearch} />
             <PhoneTable queryString={queryString} />
         </div>
