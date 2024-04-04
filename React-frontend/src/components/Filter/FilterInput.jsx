@@ -66,11 +66,6 @@ export default function FilterCriteria({ onSearch }) {
                 .filter(Boolean)
                 .join('&');
 
-            if (queryString === "") {
-                console.log("**")
-                queryString = "empty"
-            }
-
             onSearch(queryString);
         }
     };

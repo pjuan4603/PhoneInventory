@@ -13,21 +13,19 @@ export default function PhoneTable({ queryString }) {
         const fetchData = async () => {
             try {
                 const url = baseURL + "?" + queryString;
-                console.log('Query:', queryString);
-                console.log(url);
+                // console.log('Query:', queryString);
+                // console.log(url);
                 const response = await axios.get(url);
                 setData(response.data);
                 setError(null);
             } catch (error) {
                 setData(null);
                 console.error('Error fetching data:', error);
-                setError('Invalid input, please check storage and price inputs.');
+                setError(error);
             }
         };
 
-        if (queryString) {
-            fetchData();
-        }
+        fetchData();
     }, [queryString]);
 
     const columns = [
