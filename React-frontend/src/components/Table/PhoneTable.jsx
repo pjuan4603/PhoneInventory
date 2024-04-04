@@ -68,7 +68,7 @@ export default function PhoneTable({ queryString }) {
 
     return (
 
-        <div class="container mt-10 margin-top">
+        <div className="container mt-10 margin-top">
             {error && (
                 <div className="alert alert-danger" role="alert">
                     {error}
