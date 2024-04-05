@@ -21,7 +21,7 @@ export default function PhoneTable({ queryString }) {
             } catch (error) {
                 setData(null);
                 console.error('Error fetching data:', error);
-                setError(error);
+                setError('Error fetching data');
             }
         };
 

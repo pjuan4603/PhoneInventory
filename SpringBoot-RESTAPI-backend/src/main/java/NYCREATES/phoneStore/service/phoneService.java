@@ -14,10 +14,6 @@ public interface phoneService {
 
     List<Phone> getPhonesByColor(String color);
 
-    List<Phone> getPhonesByPriceRange(String indicator, int min, int max);
-
-    List<Phone> getPhonesByStorageRange(String indicator, int min, int max);
-
     List<Phone> getPhones(String brand,
                           String model,
                           Integer storage,

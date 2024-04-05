@@ -87,19 +87,6 @@ public class phoneServiceImpl implements phoneService {
     }
 
     @Override
-    public List<Phone> getPhonesByPriceRange(String indicator, int min, int max) {
-
-
-
-        return null;
-    }
-
-    @Override
-    public List<Phone> getPhonesByStorageRange(String indicator, int min, int max) {
-        return null;
-    }
-
-    @Override
     public List<Phone> getPhones( String brand,
                                   String model,
                                   Integer storage,
@@ -112,11 +99,11 @@ public class phoneServiceImpl implements phoneService {
                                   Double priceMax,
                                   String priceComp) {
 
-        // Start building the criteria
+        // Start building the criteria and initialize the sorting order
         Criteria criteria = new Criteria();
         List<Sort.Order> sortingOrder = new ArrayList<>();
 
-        // Add criteria for each provided parameter
+        // Add criteria for every provided parameter
         if (brand != null) {
             Pattern regexPattern = Pattern.compile(".*" + brand + ".*", Pattern.CASE_INSENSITIVE);
             criteria.and("brand").regex(regexPattern);
@@ -136,6 +123,7 @@ public class phoneServiceImpl implements phoneService {
         }
 
         if (storageComp != null) {
+            // if the input indicates a storage range search
             if (storageComp.equals("between")) {
                 if (storageMin != null && storageMax != null) {
                     criteria.and("storage").gte(storageMin).lte(storageMax);
@@ -152,6 +140,7 @@ public class phoneServiceImpl implements phoneService {
         }
 
         if (priceComp != null) {
+            // if the input indicates a price range search
             if (priceComp.equals("between")) {
                 if (priceMin != null && priceMax != null) {
                     criteria.and("price").gte(priceMin).lte(priceMax);

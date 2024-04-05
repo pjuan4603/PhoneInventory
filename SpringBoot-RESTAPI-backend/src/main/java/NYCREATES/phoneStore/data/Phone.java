@@ -1,7 +1,5 @@
 package NYCREATES.phoneStore.data;
 
-import java.util.Comparator;
-
 public class Phone {
 
     private String Id;
@@ -62,9 +60,4 @@ public class Phone {
         this.price = price;
     }
 
-    public Comparator<Phone> getComparator() {
-        return Comparator.comparing(Phone::getBrand)
-                .thenComparing(Phone::getModel)
-                .thenComparing(Phone::getPrice);
-    }
 }
